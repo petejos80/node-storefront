@@ -1,0 +1,22 @@
+{
+  "name": "storefront",
+  "version": "1.0.0",
+  "description": "Auction-style storefront template with Node and MySQL",
+  "main": "customer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petejos80/node-storefront.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/petejos80/node-storefront/issues"
+  },
+  "homepage": "https://github.com/petejos80/node-storefront#readme",
+  "dependencies": {
+    "mysql": "^2.15.0"
+  }
+}
