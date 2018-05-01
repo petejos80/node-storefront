@@ -21,7 +21,7 @@ var db = mysql.createConnection({
 //Validate connection to database
 db.connect(function(err) {
     if (err) throw err;
-    console.log("Connected to Database!");
+    console.log("Connected to Storefront database");
   });
 
 
@@ -38,28 +38,37 @@ function executeQuery(sql, cb) {
 }
 
 //Prints products table
-function fetchProducts(res){
+function fetchProducts(){
     db.query("SELECT * FROM products", function(err, result){
         if (err) {
             console.log(err)
         } else {
             console.table(result)
-        }
-
-    // res.write("<table>");
-    // res.write("<tr>");
-    // for(var column in result[0]){
-        // res.write("<td><label>" + column + "</label></td>");
-    // }
-    // res.write("</tr>");
-    // for(var row in result){
-        // res.write("<tr>");
-        // for(var column in result[row]){
-            // res.write("<td><label>" + result[row][column] + "</label></td>");       
-        // res.write("</tr>");         
-    })
-    // res.write("</table>");
+        } 
+    });
 };
+
+function promptUser() {
+    var itemQuestions = inquirer.prompt([
+        {
+          type: 'input',
+          name: 'item_id',
+          message: 'What is the item_id of the product you wish to buy?',
+        },
+        {
+          type: 'input',
+          name: 'stock_quantity',
+          message: 'How many would you like to buy?',
+        },
+    ]).then(function(purchaseItem) {
+      var query = db.query(
+        "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
+        [purchaseItem.stock_quantity, purchaseItem.item_id],
+        function(err, res) {
+          fetchProducts();
+        });
+    });
+    };
 
 
 
@@ -69,6 +78,7 @@ function fetchProducts(res){
 // ==================================================
 
 fetchProducts();
+promptUser();
 
 
 
