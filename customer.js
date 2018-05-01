@@ -2,6 +2,7 @@
 // DATABASE CONNECTION INFO + GLOBAL VARIABLES
 // ==================================================
 
+var result;
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 require("console.table")
@@ -21,7 +22,7 @@ var db = mysql.createConnection({
 //Validate connection to database
 db.connect(function(err) {
     if (err) throw err;
-    console.log("Connected to Storefront database");
+    fetchProducts();
   });
 
 
@@ -37,7 +38,7 @@ function executeQuery(sql, cb) {
     });
 }
 
-//Prints products table
+// Prints products table
 function fetchProducts(){
     db.query("SELECT * FROM products", function(err, result){
         if (err) {
@@ -45,10 +46,13 @@ function fetchProducts(){
         } else {
             console.table(result)
         } 
+        promptUser();
     });
 };
 
+// Prompts user questions based on table
 function promptUser() {
+    // console.table(result);
     var itemQuestions = inquirer.prompt([
         {
           type: 'input',
@@ -65,20 +69,7 @@ function promptUser() {
         "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
         [purchaseItem.stock_quantity, purchaseItem.item_id],
         function(err, res) {
-          fetchProducts();
+          if (err) throw err;
         });
     });
-    };
-
-
-// ==================================================
-// WORKFLOW
-// ==================================================
-
-fetchProducts();
-promptUser();
-
-
-
-
-
+};
