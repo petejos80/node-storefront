@@ -50,6 +50,10 @@ function fetchProducts(){
     });
 };
 
+function validateOrder() {
+    db.query("SELECT * FROM products")
+}
+
 // Prompts user questions based on table
 function promptUser() {
     // console.table(result);
@@ -65,11 +69,21 @@ function promptUser() {
           message: 'How many would you like to buy?',
         },
     ]).then(function(purchaseItem) {
+    if (stock_quantity - purchaseItem.stock_quantity < 0) {
+        console.log("Not enough Inventory, please place your order again");
+        promptUser();
+    } else {
       var query = db.query(
         "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
         [purchaseItem.stock_quantity, purchaseItem.item_id],
         function(err, res) {
           if (err) throw err;
-        });
-    });
+        })
+    }
+    })
 };
+
+// Make it so if it's positive it goes through and continues with additional function
+// Else it dumps
+
+
