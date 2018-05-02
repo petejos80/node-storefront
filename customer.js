@@ -69,17 +69,24 @@ function promptUser() {
           message: 'How many would you like to buy?',
         },
     ]).then(function(purchaseItem) {
-    if (stock_quantity - purchaseItem.stock_quantity < 0) {
-        console.log("Not enough Inventory, please place your order again");
-        promptUser();
-    } else {
-      var query = db.query(
-        "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
-        [purchaseItem.stock_quantity, purchaseItem.item_id],
-        function(err, res) {
-          if (err) throw err;
-        })
-    }
+    console.log(purchaseItem.item_id, purchaseItem.stock_quantity);
+    db.query("SELECT * FROM products WHERE item_id= ?", [purchaseItem.item_id], function (err, results){
+        // console.log(results[0].stock_quantity, purchaseItem.stock_quantity, results.stock_quantity, parseInt(purchaseItem.stock_quantity));
+        if (parseInt(purchaseItem.stock_quantity) > results[0].stock_quantity) {
+            console.log("Not enough Inventory, please place your order again");
+            promptUser();
+        } else {
+          console.log("chicken");
+          db.query(
+            "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
+            [purchaseItem.stock_quantity, purchaseItem.item_id],
+            function(err, res) {
+              if (err) throw err;
+              console.log(res);
+              fetchProducts();
+            })
+        }
+}) 
     })
 };
 
