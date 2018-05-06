@@ -51,9 +51,9 @@ function fetchProducts() {
 };
 
 function displayTotal () {
-    db.query("SELECT * FROM products WHERE item_id= ?", [purchaseItem.item_id], function (err, results){
+    db.query("SELECT * FROM products WHERE item_id= ?", [purchaseItem.item_id], function (err, result){
         console.log("--------------------------")
-        if (parseInt(purchaseItem.stock_quantity) > results[0].stock_quantity) {
+        if (parseInt(purchaseItem.stock_quantity) > result[0].stock_quantity) {
             console.log("Not enough Inventory, please place your order again");
     }}
 )};
@@ -73,9 +73,9 @@ function promptUser() {
           message: 'How many would you like to buy?',
         },
     ]).then(function(purchaseItem) {
-    db.query("SELECT * FROM products WHERE item_id= ?", [purchaseItem.item_id], function (err, results){
+    db.query("SELECT * FROM products WHERE item_id= ?", [purchaseItem.item_id], function (err, result){
         console.log("--------------------------")
-        if (parseInt(purchaseItem.stock_quantity) > results[0].stock_quantity) {
+        if (parseInt(purchaseItem.stock_quantity) > result[0].stock_quantity) {
             console.log("Not enough Inventory, please place your order again");
             promptUser();
         } else {
@@ -84,8 +84,12 @@ function promptUser() {
             [purchaseItem.stock_quantity, purchaseItem.item_id],
             function(err, res) {
               if (err) throw err;
-              console.log("Your total is")
+              var itemID = String(purchaseItem.item_id);
+              console.log("Your total is $" + purchaseItem.stock_quantity * result[0].price)
+              db.end();
             })
         }}
     )}
 )}
+
+// console.log("Your total is" + String(purchaseItem.item_id) * 
