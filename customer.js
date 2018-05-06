@@ -2,7 +2,7 @@
 // DATABASE CONNECTION INFO + GLOBAL VARIABLES
 // ==================================================
 
-// var result;
+var result;
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 require("console.table")
@@ -39,12 +39,12 @@ function executeQuery(sql, cb) {
 }
 
 // Prints products table
-function fetchProducts(){
+function fetchProducts() {
     db.query("SELECT * FROM products", function(err, result){
         if (err) {
             console.log(err)
         } else {
-            console.table(result)
+            console.log(result)
         } 
         promptUser();
     });
@@ -55,7 +55,8 @@ function displayTotal () {
         console.log("--------------------------")
         if (parseInt(purchaseItem.stock_quantity) > results[0].stock_quantity) {
             console.log("Not enough Inventory, please place your order again");
-}
+    }}
+)};
 
 // Prompts user questions based on table
 function promptUser() {
@@ -83,14 +84,8 @@ function promptUser() {
             [purchaseItem.stock_quantity, purchaseItem.item_id],
             function(err, res) {
               if (err) throw err;
-              console.log("Your total is ")
+              console.log("Your total is")
             })
-        }
-}) 
-    })
-};
-
-// Make it so if it's positive it goes through and continues with additional function
-// Else it dumps
-
-
+        }}
+    )}
+)}
