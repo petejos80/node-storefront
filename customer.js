@@ -2,7 +2,6 @@
 // DATABASE CONNECTION INFO + GLOBAL VARIABLES
 // ==================================================
 
-var result;
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 require("console.table")
@@ -44,19 +43,19 @@ function fetchProducts() {
         if (err) {
             console.log(err)
         } else {
-            console.log(result)
+            console.table(result)
         } 
         promptUser();
     });
 };
 
-function displayTotal () {
-    db.query("SELECT * FROM products WHERE item_id= ?", [purchaseItem.item_id], function (err, result){
-        console.log("--------------------------")
-        if (parseInt(purchaseItem.stock_quantity) > result[0].stock_quantity) {
-            console.log("Not enough Inventory, please place your order again");
-    }}
-)};
+// function displayTotal () {
+//     db.query("SELECT * FROM products WHERE item_id= ?", [purchaseItem.item_id], function (err, result){
+//         console.log("--------------------------")
+//         if (parseInt(purchaseItem.stock_quantity) > result[0].stock_quantity) {
+//             console.log("Not enough Inventory, please place your order again");
+//     }}
+// )};
 
 // Prompts user questions based on table
 function promptUser() {
@@ -92,4 +91,3 @@ function promptUser() {
     )}
 )}
 
-// console.log("Your total is" + String(purchaseItem.item_id) * 
