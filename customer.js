@@ -24,7 +24,6 @@ db.connect(function(err) {
     fetchProducts();
   });
 
-
 // ==================================================
 // FUNCTIONS
 // ==================================================
@@ -48,14 +47,6 @@ function fetchProducts() {
         promptUser();
     });
 };
-
-// function displayTotal () {
-//     db.query("SELECT * FROM products WHERE item_id= ?", [purchaseItem.item_id], function (err, result){
-//         console.log("--------------------------")
-//         if (parseInt(purchaseItem.stock_quantity) > result[0].stock_quantity) {
-//             console.log("Not enough Inventory, please place your order again");
-//     }}
-// )};
 
 // Prompts user questions based on table
 function promptUser() {

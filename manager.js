@@ -17,93 +17,103 @@ var db = mysql.createConnection({
 });
 
 //Validate connection to database
-//Validate connection to database
 db.connect(function(err) {
     if (err) throw err;
-    // console.log(itemQuestions.choices);
+    // console.log(managerSelections.choices);
     listOptions();
   });
 
+//   //Create variables for responses to prompt
+//   var managerSelections = inquirer.prompt([
+//     {
+//         type: "confirm",
+//         name: "mood",
+//         message: "Are you feeling alright?",
+//         default: true
+//       },
+//     {
+//         type: 'list',
+//         name: 'actions',
+//         message: "What would you like to do?",
+//         choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product'],
+//     }
+//     ]).then(function(answer) {
+//         console.log(answer);
+        // switch (action) {
+        //     case "View Products for Sale":
+        //       apples();
+        //       break;
+            
+        //     case "bananas":
+        //       bananas();
+        //       break;
+        //     }
+    // });
+
 // Define process.argv for each of the user's selections
-var action = itemQuestions;
+// var action = managerSelections;
 // var value = process.argv[3];
-console.log(itemQuestions);
+// console.log(inquire.prompt.choices);
 // SWITCH CASE //
 /* The switch-case directs which function gets run depending on user's selection */
 // =========================================================================================
 
-var itemQuestions = inquirer.prompt([
-    {
-        type: 'list',
-        name: 'actions',
-        message: "What would you like to do?",
-        choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product'],
-    },
-]);
-
-console.log(JSON.stringify(answers, null, '  '));
-
-switch (action) {
-    case "View Products for Sale":
-      apples();
-      break;
+// switch (action) {
+//     case "View Products for Sale":
+//       apples();
+//       break;
     
-    case "bananas":
-      bananas();
-      break;
-    }
+//     case "bananas":
+//       bananas();
+//       break;
+//     }
 
 // FUNCTIONS // 
 // In this app, there are 4 different functions that are called using the switch cases above.
 // ==========================================================================================
 
-// Prints products table
-function apples() {
-        console.log("These are the products for sale");
-};
+function apples () {
+    console.log("apples")
+}
 
-function bananas() {
-        console.log("Hello there this is products 2 number 2 number 2");
-};
-
-inquirer.prompt(itemQuestions.answers).then(answers => {
-    console.log(JSON.stringify(answers, null, '  '));
-  });
+function bananas () {
+    console.log("bananas")
+}
 
 
 
 
+function apples () {
+    console.log("apples")
+}
 
-
-
+function bananas () {
+    console.log("bananas")
+}
 
 
 
 // Prompts manager with available actions
 function listOptions() {
-    var itemQuestions = inquirer.prompt([
+    var managerSelections = inquirer.prompt([
         {
             type: 'list',
             name: 'actions',
             message: "What would you like to do?",
             choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product'],
         },
-    ]).then(function(purchaseItem) {
-    db.query("SELECT * FROM products WHERE item_id= ?", [purchaseItem.item_id], function (err, result){
-        console.log("--------------------------")
-        if (parseInt(purchaseItem.stock_quantity) > result[0].stock_quantity) {
-            console.log("Not enough Inventory, please place your order again");
-            promptUser();
-        } else {
-          db.query(
-            "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
-            [purchaseItem.stock_quantity, purchaseItem.item_id],
-            function(err, res) {
-              if (err) throw err;
-              var itemID = String(purchaseItem.item_id);
-              console.log("Your total is $" + purchaseItem.stock_quantity * result[0].price)
-              db.end();
+
+// Switch case is used to invokes functions depending on which menu item is chosen 
+    ]).then(function(optionSelect) {
+        // console.log(optionSelect.actions)
+        switch (optionSelect.actions) {
+                case "View Products for Sale":
+                  apples();
+                  break;
+                
+                case "View Low Inventory":
+                  bananas();
+                  break;
+                }
             })
-        }}
-    )}
-)}
+        };
