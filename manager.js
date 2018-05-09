@@ -23,75 +23,36 @@ db.connect(function(err) {
     listOptions();
   });
 
-//   //Create variables for responses to prompt
-//   var managerSelections = inquirer.prompt([
-//     {
-//         type: "confirm",
-//         name: "mood",
-//         message: "Are you feeling alright?",
-//         default: true
-//       },
-//     {
-//         type: 'list',
-//         name: 'actions',
-//         message: "What would you like to do?",
-//         choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product'],
-//     }
-//     ]).then(function(answer) {
-//         console.log(answer);
-        // switch (action) {
-        //     case "View Products for Sale":
-        //       apples();
-        //       break;
-            
-        //     case "bananas":
-        //       bananas();
-        //       break;
-        //     }
-    // });
-
-// Define process.argv for each of the user's selections
-// var action = managerSelections;
-// var value = process.argv[3];
-// console.log(inquire.prompt.choices);
-// SWITCH CASE //
-/* The switch-case directs which function gets run depending on user's selection */
-// =========================================================================================
-
-// switch (action) {
-//     case "View Products for Sale":
-//       apples();
-//       break;
-    
-//     case "bananas":
-//       bananas();
-//       break;
-//     }
-
+// ==========================================================================================  
 // FUNCTIONS // 
 // In this app, there are 4 different functions that are called using the switch cases above.
 // ==========================================================================================
 
-function apples () {
-    console.log("apples")
-}
+// List function 1 - show products available for sale
+function viewProducts() {
+    db.query("SELECT * FROM products", function(err, result){
+        if (err) {
+            console.log(err)
+        } else {
+            console.table(result)
+        } 
+    })
+};
 
-function bananas () {
-    console.log("bananas")
-}
-
-
-
-
-function apples () {
-    console.log("apples")
-}
-
-function bananas () {
-    console.log("bananas")
-}
-
-
+// List function 2 - show products available for sale
+function viewLowInventory() {
+    db.query("SELECT * FROM products WHERE stock_quantity < 5", function(err, result){
+        if (err) {
+            console.log(err)
+        } else {
+            console.table(result);
+        }
+    })
+};
+    
+            // var array1 = ['a', 'b', 'c'];
+            // array1.forEach(function(element) {
+            // console.log(element);
 
 // Prompts manager with available actions
 function listOptions() {
@@ -102,18 +63,29 @@ function listOptions() {
             message: "What would you like to do?",
             choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product'],
         },
-
 // Switch case is used to invokes functions depending on which menu item is chosen 
     ]).then(function(optionSelect) {
         // console.log(optionSelect.actions)
         switch (optionSelect.actions) {
                 case "View Products for Sale":
-                  apples();
+                  viewProducts();
                   break;
                 
                 case "View Low Inventory":
+                  viewLowInventory();
+                  break;
+
+                case "Add to Inventory":
+                  bananas();
+                  break;
+
+                case "Add New Product":
                   bananas();
                   break;
                 }
             })
         };
+
+        setTimeout(function () {
+            console.log('boo')
+          }, 100)
