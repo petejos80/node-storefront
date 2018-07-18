@@ -1,5 +1,5 @@
 # Node Storefront
-An e-commerce/inventory management interface build with Node.js and MySQL.  The interface provides multiple views: the customer view allows customers to purchase inventory, the manager view allows managers to add/edit inventories and product prices.
+An e-commerce/inventory management interface built with Node.js and MySQL.  The interface provides multiple views: the customer view allows customers to purchase inventory, the manager view allows managers to add/edit inventories and product prices.
 
 ## Getting Started
 
